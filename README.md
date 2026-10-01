@@ -7,3 +7,16 @@ Amuro Discord bot for Gundam TCG Perth discord server
 
 ## Install required packages
 `pip install -r ./requirements.txt`
+
+
+## Permissions Required
+### Privileged Gateway Intents:
+ - Server Members Intent
+ - Message Content Intent
+
+### Bot Permissions (OAuth2 Scopes):
+ - URL Generator = bot
+ - View Channels
+ - Send Messages
+ - Manage Messages
+ - Read Message History
