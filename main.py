@@ -1,9 +1,7 @@
 
-import discord
-import logging
-import os
-import argparse
+import discord, logging, os, argparse
 
+from card_lookup import card_find
 from dotenv import load_dotenv
 from discord.ext import commands
 
@@ -40,23 +38,22 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 async def on_ready():
     print(f"{bot.user.name} is ready and standing by...")
 
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-
-    if "shit" in message.content.lower():
-        await message.delete()
-        await message.channel.send(f"{message.author.mention}, Your content has been deleted for violating community standards")
-
-    await bot.process_commands(message)
+@bot.command()
+async def ping(ctx):
+    await ctx.send(f"Pong {ctx.author.mention}!")
 
 @bot.command()
-async def hello(ctx):
-    await ctx.send(f"Hello {ctx.author.mention}!")
+async def card(ctx, *, content):
 
-@bot.command()
-async def card(ctx):
-    await ctx.send('https://www.gundam-gcg.com/en/images/cards/card/GD01-001.webp?260917')
+    card_data = card_find(content)
+
+    if card_data == None:
+        await ctx.send(f'The request was invalid, please try again')
+
+    else:
+        await ctx.send(f'Card Name: {card_data["Name"]} \n'
+                    f'Card Number: [{card_data["Code"]}]({card_data["Image_Url"]}) \n'
+                    f'Card Effect:```{card_data["Effect"]}```'
+                    )
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
