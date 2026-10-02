@@ -1,6 +1,12 @@
 # discord-bot-amuro
 Amuro Discord bot for Gundam TCG Perth discord server
 
+## Commands
+### !card
+Looks up a card using the card ID.
+
+Example: `!card GD01-001`
+
 ## Virtual Env
 `python3 -m venv bot-env`
 
@@ -21,3 +27,4 @@ Amuro Discord bot for Gundam TCG Perth discord server
  - Send Messages
  - Manage Messages
  - Read Message History
+
