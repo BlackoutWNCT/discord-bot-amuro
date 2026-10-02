@@ -56,7 +56,8 @@ async def card(ctx, *, content):
     card_data = card_find(content)
 
     if card_data == None:
-        await ctx.send(f'The request was invalid, please try again')
+        await ctx.send(f'The requested card doesn\'t appear to exist ({content.upper()}). Please try again')
+        await ctx.message.delete()
 
     else:
         await ctx.send(f'Card Name: {card_data["Name"]} \n'
