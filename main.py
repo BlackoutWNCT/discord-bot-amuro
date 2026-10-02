@@ -34,6 +34,14 @@ intents.members = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
+@bot.check
+async def globally_check(ctx):
+    if any(role.name == "Pilot" for role in ctx.author.roles) == False:
+        await ctx.author.send(f'You do not have permission to invoke commands, please visit #server-rules to resolve this')
+        await ctx.message.delete()
+    else:
+        return True
+
 @bot.event
 async def on_ready():
     print(f"{bot.user.name} is ready and standing by...")
@@ -55,5 +63,6 @@ async def card(ctx, *, content):
                     f'Card Number: [{card_data["Code"]}]({card_data["Image_Url"]}) \n'
                     f'Card Effect:```{card_data["Effect"]}```'
                     )
+        await ctx.message.delete()
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
