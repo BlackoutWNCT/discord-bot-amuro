@@ -92,4 +92,22 @@ async def card(ctx, *, content):
                     )
         await ctx.message.delete()
 
+@bot.command()
+async def lfg(ctx):
+
+    if ctx.channel.name == "lfg":
+
+        lfg_id = discord.utils.get(ctx.guild.roles, name="LFG")
+
+        if lfg_id in ctx.author.roles:
+            await ctx.author.remove_roles(lfg_id)
+            await ctx.send(f'{ctx.author.mention} is no longer looking for a game')
+        else:
+            await ctx.author.add_roles(lfg_id)
+            await ctx.send(f'{lfg_id.mention} - {ctx.author.mention} is looking for a game')
+    else:
+        await ctx.author.send(f'Please use the \"looking-for-game\" channel to issue the \"!lfg\" command. Thank you.')
+    
+    await ctx.message.delete()
+
 bot.run(token, log_handler=handler, log_level=log_level)
