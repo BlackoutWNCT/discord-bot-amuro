@@ -76,7 +76,7 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 @bot.check
 async def globally_check(ctx):
     if any(role.name == "Pilot" for role in ctx.author.roles) == False:
-        await ctx.author.send(f'You do not have permission to invoke commands, please visit #server-rules to resolve this')
+        await ctx.author.send(f'You do not have permission to invoke commands, please visit [#server-rules](https://discord.com/channels/1404061057877676042/1404069507525509211) to resolve this')
         await ctx.message.delete()
         amuro_logger.warning(f'{ctx.author.display_name} (ID: {ctx.author.id}) attempted to invoke a command without the appropriate role')
     else:
