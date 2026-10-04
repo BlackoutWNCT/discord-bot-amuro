@@ -33,8 +33,6 @@ if env == "dev":
     log_level = logging.DEBUG
     log_dir = Path("./")
 
-    log_formatter = logging.Formatter("[%(levelname)s] %(asctime)s %(name)s: %(message)s")
-
     amuro_logger.setLevel(log_level)
     root_logger.setLevel(log_level)
 
@@ -45,8 +43,6 @@ elif env == "prod":
 
     log_level = logging.WARNING
     log_dir = Path("/var/log/discord-amuro")
-
-    log_formatter = logging.Formatter("%(levelname)s: %(message)s")
 
     amuro_logger.setLevel(logging.INFO)
     root_logger.setLevel(log_level)
@@ -65,10 +61,12 @@ log_handler = logging.FileHandler(filename=log_file,
 
 journal_handler = logging.StreamHandler(sys.stderr)
 
+log_handler.setFormatter(logging.Formatter("[%(levelname)s] %(asctime)s %(name)s: %(message)s"))
+journal_handler.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
+
 handlers = [log_handler, journal_handler]
 
 for handler in handlers:
-    handler.setFormatter(log_formatter)
     root_logger.addHandler(handler)
 
 bot = commands.Bot(command_prefix='!', intents=intents)
