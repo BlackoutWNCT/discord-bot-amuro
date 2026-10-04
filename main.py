@@ -37,7 +37,7 @@ if env == "dev":
 elif env == "prod":
     auth_token = os.getenv('DISCORD_TOKEN_PROD')
 
-    log_level = logging.ERROR
+    log_level = logging.WARNING
     log_dir = Path("/var/log/discord-amuro")
 
     log_formatter = logging.Formatter("%(levelname)s: %(message)s")
@@ -62,6 +62,7 @@ root_logger = logging.getLogger()
 root_logger.setLevel(log_level)
 
 amuro_logger = logging.getLogger("amuro_logger")
+amuro_logger.setLevel(logging.DEBUG)
 
 for handler in handlers:
     handler.setFormatter(log_formatter)
