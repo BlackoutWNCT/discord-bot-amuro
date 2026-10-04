@@ -24,6 +24,9 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 
+amuro_logger = logging.getLogger("amuro_logger")
+root_logger = logging.getLogger()
+
 if env == "dev":
     auth_token = os.getenv('DISCORD_TOKEN_DEV')
 
@@ -31,6 +34,9 @@ if env == "dev":
     log_dir = Path("./")
 
     log_formatter = logging.Formatter("[%(levelname)s] %(asctime)s %(name)s: %(message)s")
+
+    amuro_logger.setLevel(log_level)
+    root_logger.setLevel(log_level)
 
     print(f"Launching Amuro in DEV mode")
 
@@ -41,6 +47,9 @@ elif env == "prod":
     log_dir = Path("/var/log/discord-amuro")
 
     log_formatter = logging.Formatter("%(levelname)s: %(message)s")
+
+    amuro_logger.setLevel(logging.INFO)
+    root_logger.setLevel(log_level)
 
     print(f"Launching Amuro in PROD mode")
 
@@ -57,12 +66,6 @@ log_handler = logging.FileHandler(filename=log_file,
 journal_handler = logging.StreamHandler(sys.stderr)
 
 handlers = [log_handler, journal_handler]
-
-root_logger = logging.getLogger()
-root_logger.setLevel(log_level)
-
-amuro_logger = logging.getLogger("amuro_logger")
-amuro_logger.setLevel(logging.DEBUG)
 
 for handler in handlers:
     handler.setFormatter(log_formatter)
