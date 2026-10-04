@@ -106,7 +106,7 @@ async def lfg(ctx):
             await ctx.author.add_roles(lfg_id)
             await ctx.send(f'{lfg_id.mention} - {ctx.author.mention} is looking for a game')
     else:
-        await ctx.author.send(f'Please use the \"looking-for-game\" channel to issue the \"!lfg\" command. Thank you.')
+        await ctx.author.send(f'Please use the [#lfg](https://discord.com/channels/1404061057877676042/1552576562216435853) channel to issue the \"!lfg\" command. Thank you.')
     
     await ctx.message.delete()
 
